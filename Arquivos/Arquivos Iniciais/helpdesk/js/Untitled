@@ -1,0 +1,52 @@
+<?php
+@session_start();
+require_once __DIR__ . '/../conexao.php';
+
+header('Content-Type: application/json; charset=utf-8');
+
+function out($ok, $msg, $extra = []){
+  echo json_encode(array_merge(['ok'=>(bool)$ok, 'msg'=>(string)$msg], $extra), JSON_UNESCAPED_UNICODE);
+  exit;
+}
+
+function soNumeros($v){
+  return preg_replace('/\D+/', '', (string)$v);
+}
+
+try{
+  $doc = soNumeros($_GET['cpf_cnpj'] ?? $_POST['cpf_cnpj'] ?? '');
+
+  if ($doc === '' || !in_array(strlen($doc), [11,14], true)) {
+    out(false, 'CPF/CNPJ inválido.', ['exists' => false]);
+  }
+
+  // ✅ ajuste se a coluna tiver outro nome
+  $colDocumento = 'cpf_cnpj';
+
+  // ✅ ajuste os campos conforme sua tabela clientes
+  $st = $pdo->prepare("
+    SELECT id, nome, email, telefone
+    FROM clientes
+    WHERE {$colDocumento} = :doc
+    LIMIT 1
+  ");
+  $st->execute([':doc' => $doc]);
+  $cli = $st->fetch(PDO::FETCH_ASSOC);
+
+  if (!$cli){
+    out(true, 'Cliente não encontrado.', ['exists' => false]);
+  }
+
+  out(true, 'Cliente encontrado.', [
+    'exists' => true,
+    'data' => [
+      'id'       => (int)($cli['id'] ?? 0),
+      'nome'     => (string)($cli['nome'] ?? ''),
+      'email'    => (string)($cli['email'] ?? ''),
+      'telefone' => (string)($cli['telefone'] ?? ''),
+    ]
+  ]);
+
+}catch(Throwable $e){
+  out(false, 'Erro: ' . $e->getMessage(), ['exists' => false]);
+}

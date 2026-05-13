@@ -1,0 +1,438 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--cor-primaria) 0%, var(--cor-secundaria) 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    max-width: 1200px;
+    width: 100%;
+    display: flex;
+    min-height: 600px;
+    align-items: stretch;
+}
+
+.login-box {
+    flex: 1;
+    padding: 60px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.login-header h1 {
+    color: var(--cor-primaria);
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.login-header p {
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.login-form {
+    margin-top: 30px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    color: #495057;
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-control {
+    height: 50px;
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    padding: 12px 20px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.form-control::placeholder {
+    color: #adb5bd;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group-text {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    border-right: none;
+    border-radius: 10px 0 0 10px;
+    color: var(--cor-primaria);
+    padding: 0 20px;
+}
+
+.input-group .form-control {
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+}
+
+.input-group:focus-within .input-group-text {
+    border-color: var(--cor-primaria);
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+}
+
+.form-check-input {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+.form-check-label {
+    color: #495057;
+    cursor: pointer;
+    margin: 0;
+}
+
+.forgot-password {
+    color: var(--cor-primaria);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: var(--cor-secundaria);
+    text-decoration: underline;
+}
+
+.btn-login {
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(135deg, var(--cor-primaria) 0%, var(--cor-secundaria) 100%);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+    color: white;
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.login-footer p {
+    color: #6c757d;
+    margin: 0;
+}
+
+.login-footer a {
+    color: var(--cor-primaria);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.login-footer a:hover {
+    color: var(--cor-secundaria);
+    text-decoration: underline;
+}
+
+.login-info {
+    flex: 1;
+    background: linear-gradient(135deg, var(--cor-primaria) 0%, var(--cor-secundaria) 100%);
+    padding: 60px 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: white;
+}
+
+.login-info h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.login-info > p {
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    opacity: 0.95;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+}
+
+.features-list li {
+    padding: 15px 0;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.features-list li:last-child {
+    border-bottom: none;
+}
+
+.features-list li i {
+    margin-right: 15px;
+    font-size: 1.5rem;
+    color: #ffd700;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .login-container {
+        flex-direction: column;
+        max-width: 600px;
+        min-height: auto;
+    }
+
+    .login-info {
+        padding: 40px 30px;
+    }
+
+    .login-info h2 {
+        font-size: 2rem;
+    }
+
+    .login-box {
+        padding: 40px 30px;
+    }
+
+    .login-header h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .login-box {
+        padding: 30px 20px;
+    }
+
+    .login-info {
+        padding: 30px 20px;
+    }
+
+    .login-header h1 {
+        font-size: 1.75rem;
+    }
+
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+
+
+/* =========================
+   MODAL - RECUPERAR SENHA
+   ========================= */
+
+/* Backdrop mais suave e moderno */
+.modal-backdrop.show{
+    opacity: .55;
+}
+
+/* Container da modal */
+.modal-recuperar .modal-content{
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 25px 70px rgba(0,0,0,.35);
+}
+
+/* Header com leve destaque */
+.modal-recuperar .modal-header{
+    border-bottom: 1px solid rgba(0,0,0,.06);
+    padding: 18px 20px;
+    background: linear-gradient(
+        135deg,
+        rgba(255,255,255, 1) 0%,
+        rgba(255,255,255, 1) 55%,
+        rgba(0,0,0, .02) 100%
+    );
+}
+
+/* Ícone arredondado no header */
+.modal-recuperar .modal-icon{
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: linear-gradient(135deg, var(--cor-primaria) 0%, var(--cor-secundaria) 100%);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12);
+}
+
+.modal-recuperar .modal-title{
+    font-weight: 800;
+    letter-spacing: .2px;
+    color: #212529;
+}
+
+.modal-recuperar .modal-subtitle{
+    color: #6c757d;
+    display: block;
+    margin-top: 2px;
+}
+
+/* Corpo */
+.modal-recuperar .modal-body{
+    padding: 18px 20px 16px 20px;
+}
+
+/* Deixa texto mais leve */
+.modal-recuperar .modal-body p.text-muted{
+    margin-bottom: 14px;
+}
+
+/* Input com cara do seu layout */
+.modal-recuperar .form-control{
+    height: 48px;
+    border-radius: 12px;
+    border: 2px solid #e9ecef;
+}
+
+.modal-recuperar .form-control:focus{
+    border-color: var(--cor-primaria);
+    /* sem cor fixa, mas mantém highlight como no login */
+    box-shadow: 0 0 0 .2rem rgba(0,0,0,.06);
+}
+
+/* Input-group alinhado ao seu tema */
+.modal-recuperar .input-group-text{
+    border: 2px solid #e9ecef;
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    color: var(--cor-primaria);
+    background: #f8f9fa;
+}
+
+.modal-recuperar .input-group .form-control{
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+}
+
+/* Botão principal com gradiente do sistema */
+.btn-modal-primary{
+    height: 48px;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--cor-primaria) 0%, var(--cor-secundaria) 100%);
+    transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+
+.btn-modal-primary:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 12px 22px rgba(0,0,0,.18);
+    color: #fff;
+}
+
+.btn-modal-primary:active{
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* Botão fechar mais elegante */
+.btn-modal-outline{
+    border-radius: 12px;
+    border: 1px solid rgba(0,0,0,.15);
+    color: #495057;
+    padding: 10px 18px;
+    background: #fff;
+    transition: background .2s ease, border-color .2s ease;
+}
+
+.btn-modal-outline:hover{
+    background: rgba(0,0,0,.03);
+    border-color: rgba(0,0,0,.22);
+}
+
+/* Footer mais clean */
+.modal-recuperar .modal-footer{
+    border-top: 1px solid rgba(0,0,0,.06);
+    padding: 14px 20px 18px 20px;
+    background: #fff;
+}
+
+/* Animação suave (opcional) */
+.modal.fade .modal-dialog{
+    transform: translateY(8px) scale(.98);
+    transition: transform .2s ease-out;
+}
+.modal.show .modal-dialog{
+    transform: translateY(0) scale(1);
+}

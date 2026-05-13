@@ -1,0 +1,66 @@
+<?php
+@session_start();
+require_once __DIR__ . '/../../verificar.php';
+require_once __DIR__ . '/../../../conexao.php';
+require_once __DIR__ . '/../../includes/logs.php';
+
+header('Content-Type: application/json; charset=utf-8');
+
+$tabela = 'setores';
+
+require_once __DIR__ . '/../../includes/permissoes.php';
+if (!podeFazer('excluir')) {
+  echo json_encode(['ok'=>false,'msg'=>'Sem permissão para excluir.']);
+  exit;
+}
+
+try {
+  // aceita POST padrão (form/urlencoded) e também JSON
+  $id = 0;
+
+  if (isset($_POST['id'])) {
+    $id = (int)$_POST['id'];
+  } else {
+    $raw = file_get_contents('php://input');
+    if ($raw) {
+      $json = json_decode($raw, true);
+      if (json_last_error() === JSON_ERROR_NONE && isset($json['id'])) {
+        $id = (int)$json['id'];
+      }
+    }
+  }
+
+  if ($id <= 0) {
+    echo json_encode(['ok' => false, 'msg' => 'ID inválido.'], JSON_UNESCAPED_UNICODE);
+    exit;
+  }
+
+  // confirma existência
+  $stmt = $pdo->prepare("SELECT id, nome FROM {$tabela} WHERE id = :id LIMIT 1");
+  $stmt->execute([':id' => $id]);
+  $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+  if (!$row) {
+    echo json_encode(['ok' => false, 'msg' => 'Setor não encontrado.'], JSON_UNESCAPED_UNICODE);
+    exit;
+  }
+
+  $nome = $row['nome'] ?? '';
+
+  // executa exclusão
+  $del = $pdo->prepare("DELETE FROM {$tabela} WHERE id = :id LIMIT 1");
+  $del->execute([':id' => $id]);
+
+  registrarLog(
+    $pdo,
+    'excluir',
+    $tabela,
+    $id,
+    "Setor '{$nome}' excluído"
+  );
+
+  echo json_encode(['ok' => true, 'msg' => 'Setor excluído com sucesso!'], JSON_UNESCAPED_UNICODE);
+
+} catch (Throwable $e) {
+  echo json_encode(['ok' => false, 'msg' => 'Erro ao excluir: ' . $e->getMessage()], JSON_UNESCAPED_UNICODE);
+}

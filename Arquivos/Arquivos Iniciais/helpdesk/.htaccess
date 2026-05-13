@@ -1,0 +1,25 @@
+RewriteEngine On
+
+# Se estiver em subpasta (ex: /helpdesk), não precisa mexer aqui.
+# Só garanta que o .htaccess está na raiz do /helpdesk.
+
+# Não reescreve arquivos/pastas reais
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# ----------------------------
+# ROTAS PÚBLICAS (RAIZ)
+# ----------------------------
+
+# /abertura  -> abertura.php
+RewriteRule ^abertura/?$ abertura.php [L,QSA]
+
+# /chamado/CH20260223-FE8D61 -> chamado.php?protocolo=...
+RewriteRule ^chamado/([^/]+)/?$ chamado.php?protocolo=$1 [L,QSA]
+
+# ----------------------------
+# COMPAT: rota que você tentou no print
+# /painel/chamado/CH...  -> usa o mesmo chamado.php público
+# ----------------------------
+RewriteRule ^painel/chamado/([^/]+)/?$ chamado.php?protocolo=$1 [L,QSA]

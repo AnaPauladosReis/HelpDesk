@@ -1,0 +1,719 @@
+:root{
+    --sidebar-w: 260px;
+    --sidebar-w-collapsed: 86px;
+    --bg: #f4f6f9;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+  }
+  
+  *{ box-sizing: border-box; }
+  body{ background: var(--bg); color: var(--text); }
+  
+  .app{ display:flex; min-height:100vh; }
+  
+  /* SIDEBAR */
+  .sidebar{
+    width: var(--sidebar-w);
+    background: linear-gradient(135deg, var(--cor-primaria) 0%, var(--cor-secundaria) 100%);
+    color:#fff;
+    position: sticky;
+    top:0;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    transition: width .2s ease;
+  }
+  
+  .sidebar-header{
+    padding:14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom: 1px solid rgba(255,255,255,.15);
+  }
+  
+  .brand{ display:flex; align-items:center; gap:10px; font-weight:700; }
+  .brand-icon{
+    width:34px;height:34px;
+    display:grid;place-items:center;
+    background: rgba(255,255,255,.18);
+    border-radius:10px;
+  }
+  .brand-text{ white-space:nowrap; }
+  
+  .sidebar-nav{ padding:12px; display:flex; flex-direction:column; gap:6px; }
+  
+  .sidebar-link{
+    display:flex; align-items:center; gap:10px;
+    padding:10px 10px;
+    border-radius:12px;
+    text-decoration:none;
+    color: rgba(255,255,255,.94);
+  }
+  .sidebar-link i{ font-size:18px; width:22px; text-align:center; }
+  .sidebar-link span{ white-space:nowrap; }
+  
+  .sidebar-link:hover{ background: rgba(255,255,255,.12); }
+  .sidebar-link.active{
+    background: rgba(255,255,255,.18);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+  }
+  
+  .sidebar-footer{
+    margin-top:auto;
+    padding:12px;
+    border-top: 1px solid rgba(255,255,255,.15);
+  }
+  .sidebar-link.danger:hover{ background: rgba(255,0,0,.18); }
+  
+  /* MAIN */
+  .main{ flex:1; display:flex; flex-direction:column; min-width:0; }
+  
+  /* TOPBAR */
+  .topbar{
+    height:60px;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 0 16px;
+    position: sticky;
+    top:0;
+    z-index:10;
+  }
+  
+  .topbar-right{ display:flex; align-items:center; gap:10px; }
+  
+  .icon-btn{
+    width:38px;height:38px;
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:12px;
+    display:grid; place-items:center;
+  }
+  
+  .user-btn{
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:12px;
+    padding:6px 10px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  
+  .avatar{
+    width:30px;height:30px;
+    border-radius:10px;
+    display:grid;place-items:center;
+    background: rgba(0,0,0,.15);
+    color:#fff;
+    font-weight:700;
+  }
+  
+  /* CONTENT */
+  .content{ padding:18px; }
+  
+  .card-soft{
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius:16px;
+    box-shadow: 0 10px 20px rgba(15,23,42,.04);
+  }
+  
+  .footer{ padding:12px 18px; }
+  
+  /* COLLAPSE */
+  .app.sidebar-collapsed .sidebar{ width: var(--sidebar-w-collapsed); }
+  .app.sidebar-collapsed .brand-text,
+  .app.sidebar-collapsed .sidebar-link span{ display:none; }
+  
+  /* MOBILE */
+  @media (max-width: 991px){
+    .sidebar{ position: fixed; left: -280px; z-index: 20; }
+    .app.sidebar-open .sidebar{ left: 0; }
+    .app.sidebar-open::after{
+      content:"";
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.25);
+      z-index: 15;
+    }
+  }
+
+  
+  .page-title{
+    font-size: 28px;
+    font-weight: 800;
+    margin: 6px 0 14px;
+  }
+  
+  /* CARDS DO TOPO (ESTILO MODELO) */
+  .stat-card{
+    border-radius: 16px;
+    color: #fff;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+    min-height: 96px;
+    box-shadow: 0 14px 26px rgba(15, 23, 42, .10);
+  }
+  
+  .stat-card .label{
+    font-weight: 600;
+    opacity: .95;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .stat-card .value{
+    font-size: 34px;
+    font-weight: 900;
+    margin-top: 8px;
+    line-height: 1;
+  }
+  
+  .stat-card .icon{
+    width: 36px;
+    height: 36px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.18);
+    display: grid;
+    place-items: center;
+  }
+  
+  .stat-card .icon i{
+    font-size: 18px;
+  }
+  
+  .stat-card .watermark{
+    position: absolute;
+    right: -8px;
+    bottom: -18px;
+    font-size: 86px;
+    opacity: .14;
+  }
+  
+  /* CORES IGUAIS AO MODELO */
+  .bg-blue{
+    background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  }
+  .bg-green{
+    background: linear-gradient(135deg, #16a34a, #15803d);
+  }
+  .bg-orange{
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+  }
+  .bg-red{
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+  }
+
+  
+  /* Seções */
+.card-section{
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  
+  /* Título da seção */
+  .section-title{
+    font-weight: 800;
+    font-size: 18px;
+    color: #0f172a;
+  }
+  
+  /* Cabeçalho do card (igual modelo) */
+  .card-head{
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background: rgba(255,255,255,.6);
+  }
+  
+  /* Botão "Ver todos" mais leve */
+  .btn-soft{
+    border-radius: 10px;
+    padding: 6px 12px;
+  }
+  
+  /* Área do gráfico */
+  .chart-wrap{
+    height: 280px;
+  }
+  
+  /* TABELA CLEAN (mais próxima do modelo) */
+  .table-clean thead th{
+    border-bottom: 1px solid var(--line) !important;
+    color: #0f172a;
+    font-weight: 800;
+    background: transparent !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .table-clean tbody td{
+    border-bottom: 1px solid #eef2f7 !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .table-clean tbody tr:hover td{
+    background: rgba(2, 132, 199, 0.04);
+  }
+  
+  /* Coluna # menor */
+  .col-id{
+    width: 34px;
+    color: #64748b;
+  }
+  
+  /* Badge mais clean */
+  .badge-soft{
+    border-radius: 10px;
+    padding: 6px 10px;
+    font-weight: 700;
+    box-shadow: 0 6px 14px rgba(15,23,42,.06);
+  }
+  
+
+  .user-photo{
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid rgba(0,0,0,.08);
+  }
+
+  
+  /* Dropdown mais “app” */
+.dropdown-menu{
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 30px rgba(15,23,42,.10);
+    padding: 8px;
+  }
+  
+  .dropdown-item-soft{
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #0f172a;
+  }
+  
+  .dropdown-item-soft i{
+    width: 22px;
+    text-align: center;
+    font-size: 16px;
+    color: #334155;
+  }
+  
+  .dropdown-item-soft:hover{
+    background: rgba(2, 132, 199, 0.08);
+  }
+  
+  /* Sair destacado */
+  .dropdown-item-danger{
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #b91c1c;
+    font-weight: 700;
+  }
+  
+  .dropdown-item-danger i{
+    width: 22px;
+    text-align: center;
+    font-size: 16px;
+    color: #b91c1c;
+  }
+  
+  .dropdown-item-danger:hover{
+    background: rgba(239, 68, 68, 0.12);
+  }
+
+  
+  .modal-content{
+    border-radius: 18px !important;
+  }
+  
+  .modal-header{
+    border-bottom: 1px solid var(--line);
+  }
+  
+  .modal-footer{
+    border-top: 1px solid var(--line);
+  }
+  
+  .form-floating > .form-control,
+  .form-floating > .form-select{
+    border-radius: 12px;
+  }
+
+  
+  /* FORM-FLOATING MAIS COMPACTO */
+.form-floating > .form-control,
+.form-floating > .form-select {
+  height: 48px;              /* padrão BS ~58px */
+  padding: 0.75rem 0.75rem;
+  font-size: 14px;
+  border-radius: 12px;
+}
+
+.form-floating > label {
+  padding: 0.6rem 0.75rem;
+  font-size: 13px;
+}
+
+/* Quando está focado ou preenchido */
+.form-floating > .form-control:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.form-floating > .form-select ~ label {
+  transform: scale(.85) translateY(-0.45rem) translateX(0.15rem);
+}
+
+
+
+/* =========================
+   MODAL - PADRÃO DO SISTEMA
+   ========================= */
+
+/* Cabeçalho da modal */
+.modal-header{
+    background: linear-gradient(
+      135deg,
+      var(--cor-primaria),
+      var(--cor-secundaria)
+    );
+    color: #fff;
+    border-bottom: none;
+  }
+  
+  .modal-header .modal-title{
+    font-weight: 800;
+  }
+  
+  .modal-header .btn-close{
+    filter: invert(1);
+    opacity: .9;
+  }
+  
+  /* Rodapé da modal */
+  .modal-footer{
+    background: #f8fafc;
+    border-top: 1px solid var(--line);
+  }
+  
+  /* Botão salvar (sempre primário do sistema) */
+  .btn-salvar-sistema{
+    background: var(--cor-primaria);
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    border-radius: 12px;
+    padding: 10px 18px;
+  }
+  
+  .btn-salvar-sistema:hover{
+    background: var(--cor-secundaria);
+    color: #fff;
+  }
+  
+  /* Botão cancelar (neutro) */
+  .btn-cancelar-sistema{
+    background: #e5e7eb;
+    border: none;
+    color: #0f172a;
+    border-radius: 12px;
+    padding: 10px 18px;
+  }
+  
+  .btn-cancelar-sistema:hover{
+    background: #d1d5db;
+  }
+
+  
+  /* =========================
+   INPUTS - BORDA MAIS ESCURA
+   ========================= */
+
+.form-control,
+.form-select {
+  border: 1.5px solid #cbd5e1; /* cinza mais escuro */
+  border-radius: 12px;
+  box-shadow: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+/* Hover */
+.form-control:hover,
+.form-select:hover {
+  border-color: #94a3b8;
+}
+
+/* Focus (usa cor do sistema) */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 0.15rem rgba(102, 126, 234, 0.15);
+}
+
+/* Form-floating ajuste fino */
+.form-floating > .form-control,
+.form-floating > .form-select {
+  padding-top: 1.2rem;
+  padding-bottom: 0.6rem;
+}
+
+/* Labels flutuantes mais legíveis */
+.form-floating > label {
+  color: #475569;
+  font-weight: 600;
+}
+
+
+
+
+
+
+
+
+/* ===== SUBMENU SIDEBAR ===== */
+.sidebar-group{ display:flex; flex-direction:column; gap:6px; }
+
+.sidebar-link-btn{
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+.sidebar-link-btn .chevron{
+  margin-left: auto;
+  font-size: 14px;
+  opacity: .9;
+  transition: transform .18s ease;
+}
+
+.sidebar-group.open .sidebar-link-btn .chevron{
+  transform: rotate(180deg);
+}
+
+.sidebar-submenu{
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  padding-left: 12px;
+  margin-top: 2px;
+}
+
+.sidebar-group.open .sidebar-submenu{ display:flex; }
+
+.sidebar-sublink{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:9px 10px;
+  border-radius: 12px;
+  text-decoration:none;
+  color: rgba(255,255,255,.90);
+  background: rgba(255,255,255,.08);
+}
+
+.sidebar-sublink i{ font-size: 16px; width:22px; text-align:center; opacity:.95; }
+.sidebar-sublink span{ white-space:nowrap; }
+
+.sidebar-sublink:hover{ background: rgba(255,255,255,.12); }
+.sidebar-sublink.active{
+  background: rgba(255,255,255,.18);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+}
+
+/* Quando sidebar colapsada: esconde submenus */
+.app.sidebar-collapsed .sidebar-submenu{ display:none !important; }
+.app.sidebar-collapsed .sidebar-link-btn .chevron{ display:none; }
+
+
+
+
+
+
+/* =========================
+   SELECT2 - IGUAL AO FORM-SELECT
+   ========================= */
+
+/* container sempre ocupar 100% */
+.select2-container {
+  width: 100% !important;
+}
+
+/* CAIXA PRINCIPAL */
+.select2-container--bootstrap-5 .select2-selection--single {
+  height: 56px;
+  min-height: 56px;
+  border-radius: 12px;
+  border: 1.5px solid #cbd5e1;
+  background: #fff;
+  padding: 0 0.75rem;
+  display: flex;
+  align-items: center;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+/* TEXTO / PLACEHOLDER */
+.select2-container--bootstrap-5 
+.select2-selection--single 
+.select2-selection__rendered {
+  padding: 0;
+  line-height: 1.4;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+/* PLACEHOLDER mais suave */
+.select2-container--bootstrap-5 
+.select2-selection--single 
+.select2-selection__placeholder {
+  color: #64748b;
+}
+
+/* SETA */
+.select2-container--bootstrap-5 
+.select2-selection--single 
+.select2-selection__arrow {
+  height: 46px;
+  right: 10px;
+}
+
+/* HOVER */
+.select2-container--bootstrap-5 
+.select2-selection--single:hover {
+  border-color: #94a3b8;
+}
+
+/* FOCUS (igual form-control) */
+.select2-container--bootstrap-5.select2-container--focus 
+.select2-selection--single,
+.select2-container--bootstrap-5.select2-container--open 
+.select2-selection--single {
+  border-color: var(--cor-primaria);
+  box-shadow: 0 0 0 0.15rem rgba(102, 126, 234, 0.15);
+}
+
+/* DROPDOWN */
+.select2-dropdown {
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 30px rgba(15,23,42,.10);
+  overflow: hidden;
+}
+
+/* ITENS */
+.select2-results__option {
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+/* ITEM SELECIONADO */
+.select2-results__option--selected {
+  background: rgba(2, 132, 199, 0.08);
+}
+
+/* ITEM HOVER */
+.select2-results__option--highlighted {
+  background: rgba(2, 132, 199, 0.12);
+}
+
+
+/* =========================
+   SELECT2 – SETA IGUAL FORM-SELECT (SEM QUEBRAR O SELECT2)
+   ========================= */
+
+/* garante espaço pro ícone */
+.select2-container--bootstrap-5 .select2-selection--single{
+  padding-right: 2.4rem !important;
+  cursor: pointer;
+}
+
+/* posiciona a área da seta */
+.select2-container--bootstrap-5 .select2-selection--single .select2-selection__arrow{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 2.4rem;
+  height: 100%;
+}
+
+/* desenha o chevron usando o <b> padrão do Select2 (não remove ele) */
+.select2-container--bootstrap-5 .select2-selection--single .select2-selection__arrow b{
+  border: solid #64748b !important;
+  border-width: 0 2px 2px 0 !important;
+  display: inline-block !important;
+  padding: 3px !important;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%) rotate(45deg);
+  margin: 0 !important;
+
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* opcional: ao abrir, vira pra cima */
+.select2-container--bootstrap-5.select2-container--open
+.select2-selection--single .select2-selection__arrow b{
+  transform: translate(-50%, -40%) rotate(-135deg);
+}
+
+/* =========================
+   SELECT2 - FIX CAMPO DE BUSCA (não some)
+   ========================= */
+
+/* o dropdown precisa aparecer acima e não “cortar” o search */
+.select2-container--bootstrap-5 .select2-dropdown{
+  z-index: 1060;
+}
+
+/* garante que a área do dropdown não esconda o search */
+.select2-container--bootstrap-5 .select2-dropdown .select2-search{
+  display: block !important;
+  padding: 10px 10px 8px;
+  background: #fff;
+}
+
+/* o input de busca (é isso que estava “sumindo”) */
+.select2-container--bootstrap-5 .select2-dropdown .select2-search__field{
+  width: 100% !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  border-radius: 12px !important;
+  border: 1.5px solid #cbd5e1 !important;
+  outline: none !important;
+  padding: 8px 12px !important;
+  font-size: 14px !important;
+  box-shadow: none !important;
+}
+
+/* foco do input de busca */
+.select2-container--bootstrap-5 .select2-dropdown .select2-search__field:focus{
+  border-color: var(--cor-primaria) !important;
+  box-shadow: 0 0 0 0.15rem rgba(102, 126, 234, 0.15) !important;
+}
+
+/* não deixa a lista colar no search */
+.select2-container--bootstrap-5 .select2-results > .select2-results__options{
+  max-height: 240px;
+  overflow-y: auto;
+}
+
