@@ -2,7 +2,6 @@
 
 > **Versão do documento:** 1.0  
 > **Data de geração:** Maio de 2026  
-> **Finalidade:** Alimentar o NotebookLM para geração de apresentação técnica completa
 
 ---
 
@@ -739,4 +738,3 @@ O banco de dados possui o campo `empresa` em todas as tabelas principais. Embora
 
 ---
 
-*Documento gerado automaticamente com base no código-fonte e banco de dados do projeto HelpDesk.*
