@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HelpDesk — Guia de Demonstração Visual (Figma)</title>
+<style>
+  :root {
+    --pri: #4F5DA3;
+    --pri-dark: #2D3463;
+    --pri-light: #EEF0FB;
+    --text: #1E2030;
+    --muted: #6B7280;
+    --border: #E2E5EF;
+    --bg: #F8F9FC;
+    --white: #ffffff;
+    --green: #198754;
+    --orange: #FD7E14;
+    --red: #DC3545;
+    --purple: #6F42C1;
+    --blue: #0D6EFD;
+    --gray: #6C757D;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--bg); color: var(--text); font-size: 14px; line-height: 1.6; }
+
+  .page { max-width: 960px; margin: 0 auto; padding: 32px 24px; }
+
+  .header { background: linear-gradient(135deg, var(--pri-dark) 0%, var(--pri) 100%); color: white; border-radius: 12px; padding: 32px 36px; margin-bottom: 32px; }
+  .header h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .header p { font-size: 14px; opacity: 0.85; }
+  .header .tags { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .tag { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 20px; padding: 3px 12px; font-size: 12px; }
+
+  .tela-nav { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+  .tela-btn { background: var(--white); border: 1.5px solid var(--border); border-radius: 8px; padding: 8px 16px; font-size: 13px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .18s; }
+  .tela-btn:hover, .tela-btn.active { background: var(--pri); color: white; border-color: var(--pri); }
+
+  .tela-section { display: none; }
+  .tela-section.visible { display: block; }
+
+  .section-title { font-size: 20px; font-weight: 700; color: var(--pri-dark); margin-bottom: 4px; }
+  .section-sub { color: var(--muted); font-size: 13px; margin-bottom: 20px; }
+
+  .mockup-frame { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 24px; }
+  .mockup-bar { background: var(--pri-dark); display: flex; align-items: center; gap: 6px; padding: 10px 16px; }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-r { background: #FF6057; } .dot-g { background: #FEBC2E; } .dot-b { background: #27C840; }
+  .mockup-bar-url { background: rgba(255,255,255,0.12); border-radius: 4px; color: rgba(255,255,255,0.7); font-size: 11px; padding: 3px 10px; margin-left: 8px; flex: 1; }
+
+  .spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+  .spec-card { background: var(--pri-light); border: 1px solid #D0D6F0; border-radius: 8px; padding: 14px 16px; }
+  .spec-card h4 { font-size: 12px; font-weight: 700; color: var(--pri); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+  .spec-card ul { list-style: none; padding: 0; }
+  .spec-card li { font-size: 13px; color: var(--text); padding: 2px 0; display: flex; align-items: flex-start; gap: 6px; }
+  .spec-card li::before { content: '→'; color: var(--pri); font-size: 11px; margin-top: 2px; flex-shrink: 0; }
+
+  .demo-tip { background: #FFF8E1; border-left: 4px solid #FEBC2E; border-radius: 0 8px 8px 0; padding: 12px 16px; margin: 16px 0; font-size: 13px; color: #6B5000; }
+  .demo-tip strong { color: #4A3800; }
+
+  /* ── MOCK COMPONENTS ── */
+  .mock-login { display: flex; min-height: 340px; }
+  .mock-login-left { background: linear-gradient(135deg, #2D3463 0%, #4F5DA3 100%); width: 45%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; color: white; }
+  .mock-login-right { flex: 1; padding: 32px; background: white; display: flex; flex-direction: column; justify-content: center; }
+  .mock-logo { width: 56px; height: 56px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 12px; }
+  .mock-input { border: 1px solid var(--border); border-radius: 6px; padding: 9px 12px; font-size: 13px; margin-bottom: 10px; width: 100%; color: var(--text); background: white; }
+  .mock-btn-pri { background: var(--pri); color: white; border: none; border-radius: 6px; padding: 10px 20px; font-size: 13px; font-weight: 600; width: 100%; cursor: pointer; }
+  .mock-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; display: block; }
+
+  .mock-dash { display: flex; min-height: 380px; }
+  .mock-sidebar { background: var(--pri-dark); width: 180px; padding: 16px 12px; flex-shrink: 0; }
+  .mock-sidebar-logo { color: white; font-size: 13px; font-weight: 700; margin-bottom: 20px; padding: 0 4px; }
+  .mock-nav-item { color: rgba(255,255,255,0.65); font-size: 12px; padding: 7px 10px; border-radius: 6px; margin-bottom: 2px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+  .mock-nav-item.active { background: rgba(255,255,255,0.15); color: white; }
+  .mock-nav-icon { font-size: 14px; }
+  .mock-main { flex: 1; padding: 20px; background: var(--bg); overflow: hidden; }
+  .mock-header { background: white; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border); }
+  .mock-h-title { font-size: 15px; font-weight: 700; color: var(--pri-dark); }
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px; }
+  .kpi-card { border-radius: 8px; padding: 12px 14px; color: white; }
+  .kpi-card .kpi-label { font-size: 10px; opacity: 0.9; margin-bottom: 4px; }
+  .kpi-card .kpi-val { font-size: 22px; font-weight: 700; }
+  .kpi-blue { background: var(--blue); }
+  .kpi-red { background: var(--red); }
+  .kpi-purple { background: var(--purple); }
+  .kpi-green { background: var(--green); }
+  .kpi-orange { background: var(--orange); }
+  .kpi-gray { background: var(--gray); }
+
+  .mock-table-wrap { background: white; border-radius: 8px; border: 1px solid var(--border); overflow: hidden; }
+  .mock-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+  .mock-table th { background: var(--pri-light); color: var(--pri-dark); font-weight: 700; padding: 8px 10px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .04em; }
+  .mock-table td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); }
+  .mock-table tr:last-child td { border-bottom: none; }
+  .badge { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 10px; font-weight: 600; }
+  .badge-aberto { background: #CFDFFE; color: #0D4DB5; }
+  .badge-analise { background: #E8D9FF; color: #4A1B9A; }
+  .badge-atend { background: #C8F5E6; color: #0A5C3B; }
+  .badge-aguard { background: #FFE5CC; color: #8C3D00; }
+  .badge-resolv { background: #C8F5D6; color: #0A5C2A; }
+  .badge-fechar { background: #E9E9E9; color: #444; }
+  .badge-baixa { background: #E9E9E9; color: #444; }
+  .badge-media { background: #CFDFFE; color: #0D4DB5; }
+  .badge-alta { background: #FFE5CC; color: #8C3D00; }
+  .badge-urgente { background: #FFD5D5; color: #8C0000; }
+
+  .mock-chamado { display: flex; min-height: 400px; }
+  .mock-timeline { flex: 1; padding: 20px; background: white; }
+  .mock-chamado-side { width: 220px; background: var(--bg); border-left: 1px solid var(--border); padding: 16px; }
+  .timeline-item { display: flex; gap: 12px; margin-bottom: 16px; }
+  .tl-dot-wrap { display: flex; flex-direction: column; align-items: center; }
+  .tl-dot { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; flex-shrink: 0; }
+  .tl-line { width: 1px; background: var(--border); flex: 1; margin: 4px 0; }
+  .tl-body { flex: 1; }
+  .tl-label { font-size: 11px; color: var(--muted); margin-bottom: 2px; }
+  .tl-msg { font-size: 12px; color: var(--text); background: var(--bg); border-radius: 6px; padding: 8px 10px; border: 1px solid var(--border); }
+  .tl-msg.cliente { background: var(--pri-light); border-color: #C5CCE8; }
+  .side-info-row { margin-bottom: 10px; }
+  .side-info-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+  .side-info-val { font-size: 12px; color: var(--text); font-weight: 600; margin-top: 2px; }
+
+  .mock-portal { display: flex; min-height: 320px; }
+  .mock-portal-side { background: var(--pri-dark); width: 160px; padding: 16px 12px; flex-shrink: 0; }
+  .mock-portal-main { flex: 1; padding: 20px; background: var(--bg); }
+
+  /* Figma Annotations */
+  .annot-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .annot-item { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+  .annot-num { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; background: var(--pri); color: white; border-radius: 50%; font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+  .annot-item h4 { font-size: 12px; font-weight: 700; color: var(--pri-dark); margin-bottom: 4px; }
+  .annot-item p { font-size: 12px; color: var(--muted); }
+
+  .palette-strip { display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap; }
+  .pal-item { border-radius: 6px; padding: 8px 12px; font-size: 11px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+  .pal-swatch { width: 14px; height: 14px; border-radius: 3px; }
+
+  .flow-row { display: flex; align-items: center; gap: 8px; margin: 16px 0; flex-wrap: wrap; }
+  .flow-box { background: var(--pri-light); border: 1.5px solid #C5CCE8; border-radius: 8px; padding: 8px 14px; font-size: 12px; font-weight: 600; color: var(--pri-dark); white-space: nowrap; }
+  .flow-arrow { color: var(--pri); font-size: 18px; }
+  .flow-box.closed { background: #E9F5EE; border-color: #A8D5B5; color: #0A5C2A; }
+
+  .route-pill { display: inline-block; background: #F0F4FF; border: 1px solid #C5CCE8; border-radius: 4px; padding: 2px 8px; font-family: monospace; font-size: 12px; color: var(--pri-dark); margin: 2px; }
+
+  @media (max-width: 640px) {
+    .spec-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2,1fr); }
+    .mock-login-left { display: none; }
+    .mock-dash { flex-direction: column; }
+    .mock-sidebar { width: 100%; height: auto; }
+    .annot-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>🖥️ Sistema HelpDesk — Guia de Demonstração Visual</h1>
+    <p>Roteiro completo de telas, componentes e anotações para montagem dos mockups no Figma</p>
+    <div class="tags">
+      <span class="tag">PHP 8.2</span>
+      <span class="tag">MariaDB 10.4</span>
+      <span class="tag">Bootstrap 5</span>
+      <span class="tag">Fetch API</span>
+      <span class="tag">6 Telas</span>
+      <span class="tag">Pitch 15 min</span>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <div class="tela-nav">
+    <button class="tela-btn active" onclick="showTela(0)">1. Login</button>
+    <button class="tela-btn" onclick="showTela(1)">2. Dashboard</button>
+    <button class="tela-btn" onclick="showTela(2)">3. Chamados</button>
+    <button class="tela-btn" onclick="showTela(3)">4. Detalhe</button>
+    <button class="tela-btn" onclick="showTela(4)">5. Portal Cliente</button>
+    <button class="tela-btn" onclick="showTela(5)">6. Gestão</button>
+    <button class="tela-btn" onclick="showTela(6)">Paleta &amp; Fluxo</button>
+  </div>
+
+  <!-- ===================== TELA 1 — LOGIN ===================== -->
+  <div class="tela-section visible" id="t0">
+    <div class="section-title">Tela 1 — Login / Acesso</div>
+    <div class="section-sub">Rota operador: <span class="route-pill">/helpdesk/</span> &nbsp; Rota cliente: <span class="route-pill">/helpdesk/acesso.php</span></div>
+
+    <div class="mockup-frame">
+      <div class="mockup-bar">
+        <div class="dot dot-r"></div><div class="dot dot-g"></div><div class="dot dot-b"></div>
+        <div class="mockup-bar-url">localhost/helpdesk/</div>
+      </div>
+      <div class="mock-login">
+        <div class="mock-login-left">
+          <div class="mock-logo">🎧</div>
+          <div style="font-size:16px; font-weight:700; text-align:center; margin-bottom:6px;">Sistema HelpDesk</div>
+          <div style="font-size:12px; opacity:.75; text-align:center;">Gestão Digital de Chamados</div>
+          <div style="margin-top:24px; font-size:11px; opacity:.6; text-align:center;">Cor: #667eea → #764ba2<br>(variável da tabela config)</div>
+        </div>
+        <div class="mock-login-right">
+          <div style="font-size:16px; font-weight:700; color:#2D3463; margin-bottom:4px;">Entrar no sistema</div>
+          <div style="font-size:12px; color:#6B7280; margin-bottom:20px;">Acesso restrito a operadores</div>
+          <span class="mock-label">E-mail</span>
+          <input class="mock-input" type="email" placeholder="seu@email.com" readonly>
+          <span class="mock-label">Senha</span>
+          <input class="mock-input" type="password" placeholder="••••••••" readonly>
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:14px;">
+            <input type="checkbox" id="lembrar">
+            <label for="lembrar" style="font-size:12px; color:#6B7280;">Lembrar meu acesso</label>
+          </div>
+          <button class="mock-btn-pri">Entrar</button>
+          <div style="text-align:center; margin-top:12px; font-size:12px; color:#4F5DA3;">Esqueci minha senha</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h4>Componentes Figma</h4>
+        <ul>
+          <li>Tela dividida 50/50 (layout split-screen)</li>
+          <li>Gradiente esquerdo: #667eea → #764ba2 (45°)</li>
+          <li>Logo dinâmico (imagem da tabela config)</li>
+          <li>Input: email + senha com toggle 👁</li>
+          <li>Checkbox "Lembrar-me"</li>
+          <li>Botão primário full-width</li>
+          <li>Link "Esqueci minha senha"</li>
+          <li>Flash message de erro (abaixo do form)</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Versão — Portal Cliente</h4>
+        <ul>
+          <li>Mesmo layout visual da tela do operador</li>
+          <li>Campo: CPF/CNPJ OU Telefone (com máscara)</li>
+          <li>Máscara automática: 000.000.000-00 ou CNPJ</li>
+          <li>Sessão PHP independente do painel</li>
+          <li>Sessão salva: cliente_id, cliente_nome</li>
+          <li>Após login → redireciona para /painel_cliente/</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="demo-tip">
+      <strong>💡 O que destacar no pitch:</strong> Mostre os dois pontos de entrada distintos — operador e cliente — com autenticações PHP independentes. Tente logar com credenciais inválidas para mostrar a flash message sem revelar se o usuário existe (prevenção de enumeração de contas).
+    </div>
+  </div>
+
+  <!-- ===================== TELA 2 — DASHBOARD ===================== -->
+  <div class="tela-section" id="t1">
+    <div class="section-title">Tela 2 — Dashboard (Painel de Controle)</div>
+    <div class="section-sub">Rota: <span class="route-pill">/helpdesk/painel/dashboard</span> &nbsp; Dados: COUNT(*) com filtros de permissão por setor</div>
+
+    <div class="mockup-frame">
+      <div class="mockup-bar">
+        <div class="dot dot-r"></div><div class="dot dot-g"></div><div class="dot dot-b"></div>
+        <div class="mockup-bar-url">localhost/helpdesk/painel/dashboard</div>
+      </div>
+      <div class="mock-dash">
+        <div class="mock-sidebar">
+          <div class="mock-sidebar-logo">🎧 HelpDesk</div>
+          <div class="mock-nav-item active"><span class="mock-nav-icon">📊</span>Dashboard</div>
+          <div class="mock-nav-item"><span class="mock-nav-icon">🎫</span>Chamados</div>
+          <div class="mock-nav-item"><span class="mock-nav-icon">👥</span>Clientes</div>
+          <div class="mock-nav-item"><span class="mock-nav-icon">👤</span>Usuários</div>
+          <div class="mock-nav-item"><span class="mock-nav-icon">📁</span>Cadastros</div>
+          <div class="mock-nav-item"><span class="mock-nav-icon">📋</span>Logs</div>
+          <div class="mock-nav-item"><span class="mock-nav-icon">💾</span>Backup</div>
+        </div>
+        <div class="mock-main">
+          <div class="mock-header">
+            <div class="mock-h-title">Dashboard</div>
+            <div style="font-size:12px; color:#6B7280;">Usuário Administrador ▾</div>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi-card kpi-blue"><div class="kpi-label">Chamados Abertos</div><div class="kpi-val">12</div></div>
+            <div class="kpi-card kpi-red"><div class="kpi-label">Urgentes</div><div class="kpi-val">3</div></div>
+            <div class="kpi-card kpi-purple"><div class="kpi-label">Abertos Hoje</div><div class="kpi-val">5</div></div>
+            <div class="kpi-card kpi-green"><div class="kpi-label">Em Atendimento</div><div class="kpi-val">7</div></div>
+            <div class="kpi-card kpi-orange"><div class="kpi-label">Aguardando Cliente</div><div class="kpi-val">2</div></div>
+            <div class="kpi-card kpi-gray"><div class="kpi-label">Sem Responsável</div><div class="kpi-val">4</div></div>
+            <div class="kpi-card kpi-blue"><div class="kpi-label">Clientes Ativos</div><div class="kpi-val">28</div></div>
+            <div class="kpi-card kpi-green"><div class="kpi-label">Chamados no Mês</div><div class="kpi-val">43</div></div>
+          </div>
+          <div class="mock-table-wrap">
+            <table class="mock-table">
+              <thead><tr><th>Protocolo</th><th>Cliente</th><th>Prioridade</th><th>Status</th><th>Responsável</th></tr></thead>
+              <tbody>
+                <tr><td style="font-family:monospace;font-size:10px;">CH20260224-96E29B</td><td>Cliente Teste Hugo</td><td><span class="badge badge-urgente">Urgente</span></td><td><span class="badge badge-analise">Em análise</span></td><td>Admin</td></tr>
+                <tr><td style="font-family:monospace;font-size:10px;">CH20260224-BEF7DD</td><td>Cliente Teste</td><td><span class="badge badge-alta">Alta</span></td><td><span class="badge badge-atend">Em atendimento</span></td><td>Técnico João</td></tr>
+                <tr><td style="font-family:monospace;font-size:10px;">CH20260223-FE8D61</td><td>Cliente Teste</td><td><span class="badge badge-media">Média</span></td><td><span class="badge badge-aguard">Aguardando</span></td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h4>Sidebar — Especificações</h4>
+        <ul>
+          <li>Largura fixa: 240px. Cor: #2D3463</li>
+          <li>Menus configuráveis via config/menu.php (PHP)</li>
+          <li>Grupo "Cadastros" colapsável com sub-itens</li>
+          <li>Ícone ativo com fundo rgba(255,255,255,0.15)</li>
+          <li>Logo do sistema no topo (carregado da tabela config)</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Cards KPI — Detalhamento</h4>
+        <ul>
+          <li>8 cards em grid 4×2 (responsivo)</li>
+          <li>Cada card: COUNT(*) via PDO com JOIN de permissão</li>
+          <li>Administrador: vê tudo / Atendente: só seus setores</li>
+          <li>Atualização via reload da página</li>
+          <li>Watermark icon no fundo de cada card</li>
+        </ul>
+      </div>
+    </div>
+    <div class="demo-tip">
+      <strong>💡 O que destacar:</strong> Troque entre usuário Administrador e Atendente e mostre que os números nos cards mudam — o SQL filtra automaticamente por permissão de setor. Os dados são 100% reais, calculados ao vivo no banco.
+    </div>
+  </div>
+
+  <!-- ===================== TELA 3 — CHAMADOS ===================== -->
+  <div class="tela-section" id="t2">
+    <div class="section-title">Tela 3 — Abertura / Listagem de Chamados</div>
+    <div class="section-sub">Rota listagem: <span class="route-pill">/painel/ajax/abertura/listar.php</span> &nbsp; Rota salvar: <span class="route-pill">/painel/ajax/abertura/salvar.php</span></div>
+
+    <div class="mockup-frame">
+      <div class="mockup-bar">
+        <div class="dot dot-r"></div><div class="dot dot-g"></div><div class="dot dot-b"></div>
+        <div class="mockup-bar-url">localhost/helpdesk/painel/abertura</div>
+      </div>
+      <div style="padding: 20px; background: #F8F9FC;">
+        <!-- toolbar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; flex-wrap:wrap; gap:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-size:15px; font-weight:700; color:#2D3463;">🎫 Abertura de Chamados</span>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button style="background:#4F5DA3;color:white;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:600;">+ Novo Chamado</button>
+            <button style="background:white;color:#6B7280;border:1px solid #E2E5EF;border-radius:6px;padding:7px 14px;font-size:12px;">✕ Limpar</button>
+            <button style="background:white;color:#6B7280;border:1px solid #E2E5EF;border-radius:6px;padding:7px 14px;font-size:12px;">📄 Relatório</button>
+          </div>
+        </div>
+        <!-- filtros -->
+        <div style="background:white;border:1px solid #E2E5EF;border-radius:8px;padding:14px 16px;margin-bottom:14px;display:flex;gap:10px;flex-wrap:wrap;">
+          <div style="font-size:11px;color:#6B7280;align-self:center;">Filtros:</div>
+          <select style="font-size:12px;padding:5px 10px;border:1px solid #E2E5EF;border-radius:5px;color:#1E2030;"><option>Todos os Status</option><option>Aberto</option><option>Em análise</option></select>
+          <select style="font-size:12px;padding:5px 10px;border:1px solid #E2E5EF;border-radius:5px;color:#1E2030;"><option>Prioridade</option><option>Urgente</option></select>
+          <select style="font-size:12px;padding:5px 10px;border:1px solid #E2E5EF;border-radius:5px;color:#1E2030;"><option>Todos os Setores</option></select>
+          <input style="font-size:12px;padding:5px 10px;border:1px solid #E2E5EF;border-radius:5px;flex:1;min-width:160px;" placeholder="🔍  Protocolo, assunto, cliente...">
+        </div>
+        <!-- tabela -->
+        <div class="mock-table-wrap">
+          <table class="mock-table">
+            <thead><tr><th>Protocolo</th><th>Cliente</th><th>Assunto</th><th>Prior.</th><th>Status</th><th>Responsável</th><th>Criado em</th><th>Ações</th></tr></thead>
+            <tbody>
+              <tr><td style="font-family:monospace;font-size:10px;">CH20260224-96E29B</td><td>Cliente Teste Hugo<br><span style="color:#6B7280;font-size:10px;">(31) 97527-5084</span></td><td>TESSSTT</td><td><span class="badge badge-urgente">Urgente</span></td><td><span class="badge badge-analise">Em análise</span></td><td>Admin</td><td style="font-size:10px;">24/02/26<br>14:04</td><td style="white-space:nowrap;"><button style="font-size:10px;padding:3px 8px;border:1px solid #4F5DA3;color:#4F5DA3;background:white;border-radius:4px;">✏️</button> <button style="font-size:10px;padding:3px 8px;border:1px solid #DC3545;color:#DC3545;background:white;border-radius:4px;">🗑️</button></td></tr>
+              <tr><td style="font-family:monospace;font-size:10px;">CH20260224-BEF7DD</td><td>Cliente Teste</td><td>tttttttttttt</td><td><span class="badge badge-media">Média</span></td><td><span class="badge badge-aberto">Aberto</span></td><td>—</td><td style="font-size:10px;">24/02/26<br>11:32</td><td style="white-space:nowrap;"><button style="font-size:10px;padding:3px 8px;border:1px solid #4F5DA3;color:#4F5DA3;background:white;border-radius:4px;">✏️</button> <button style="font-size:10px;padding:3px 8px;border:1px solid #DC3545;color:#DC3545;background:white;border-radius:4px;">🗑️</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h4>Modal — Novo Chamado</h4>
+        <ul>
+          <li>Campo CPF/CNPJ → busca automática via AJAX no blur/keyup</li>
+          <li>Auto-fill: Nome, E-mail, Telefone (readonly se cliente encontrado)</li>
+          <li>Campos: Assunto, Descrição (textarea), Prioridade (select), Setor</li>
+          <li>Responsável (select filtrado por setor)</li>
+          <li>Status inicial pré-preenchido com status padrão (padrao='Sim')</li>
+          <li>Protocolo gerado automaticamente ao salvar</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Filtros e Listagem</h4>
+        <ul>
+          <li>Filtro por: período (data ini/fim), status, prioridade, setor</li>
+          <li>Busca textual: protocolo, assunto, nome do cliente, e-mail</li>
+          <li>Resposta da listagem em JSON via Fetch API</li>
+          <li>Badges de status com cor dinâmica vinda do banco (hex da tabela chamados_status)</li>
+          <li>Botão Relatório abre PDF com filtros aplicados (server-side)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="demo-tip">
+      <strong>💡 O que destacar:</strong> Abrir o modal de novo chamado, digitar um CPF existente e mostrar o preenchimento automático de nome, e-mail e telefone via AJAX sem recarregar a página. Depois salvar e mostrar o protocolo gerado aparecendo na listagem.
+    </div>
+  </div>
+
+  <!-- ===================== TELA 4 — DETALHE ===================== -->
+  <div class="tela-section" id="t3">
+    <div class="section-title">Tela 4 — Detalhe / Timeline do Chamado</div>
+    <div class="section-sub">Rota operador: <span class="route-pill">/painel/chamado/{id}</span> &nbsp; Rota pública: <span class="route-pill">/chamado/{PROTOCOLO}</span></div>
+
+    <div class="mockup-frame">
+      <div class="mockup-bar">
+        <div class="dot dot-r"></div><div class="dot dot-g"></div><div class="dot dot-b"></div>
+        <div class="mockup-bar-url">localhost/helpdesk/chamado/CH20260224-96E29B</div>
+      </div>
+      <div style="padding:12px 16px; background:#F8F9FC; border-bottom:1px solid #E2E5EF; display:flex; justify-content:space-between; align-items:center;">
+        <div>
+          <span style="font-family:monospace; font-size:12px; background:#EEF0FB; color:#4F5DA3; padding:3px 8px; border-radius:4px; font-weight:700;">CH20260224-96E29B</span>
+          <span style="margin-left:10px; font-size:13px; font-weight:700; color:#2D3463;">TESSSTT</span>
+        </div>
+        <span class="badge badge-urgente" style="font-size:11px; padding:4px 10px;">🔴 Urgente</span>
+      </div>
+      <div class="mock-chamado">
+        <div class="mock-timeline">
+          <div style="font-size:12px; font-weight:700; color:#2D3463; margin-bottom:14px;">📋 Histórico do Chamado</div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap">
+              <div class="tl-dot" style="background:#E8D9FF; color:#4A1B9A; font-size:14px;">📂</div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-body">
+              <div class="tl-label">Usuário Administrador · 24/02/26 14:04</div>
+              <div class="tl-msg">Chamado aberto com status: <span class="badge badge-analise">Em análise</span></div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap">
+              <div class="tl-dot" style="background:#C8F5E6; color:#0A5C3B; font-size:14px;">💬</div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-body">
+              <div class="tl-label">Técnico João · 24/02/26 14:15</div>
+              <div class="tl-msg">Verificando o problema relatado. Aguarde nosso retorno.</div>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="tl-dot-wrap">
+              <div class="tl-dot" style="background:#CFDFFE; color:#0D4DB5; font-size:14px;">👤</div>
+              <div class="tl-line"></div>
+            </div>
+            <div class="tl-body">
+              <div class="tl-label">Cliente Teste Hugo · 24/02/26 14:50</div>
+              <div class="tl-msg cliente">Ok, obrigado. Fico aguardando!</div>
+            </div>
+          </div>
+          <!-- nova resposta -->
+          <div style="margin-top:16px; border-top:1px solid #E2E5EF; padding-top:14px;">
+            <div style="font-size:11px; font-weight:700; color:#2D3463; margin-bottom:6px;">Adicionar resposta</div>
+            <textarea style="width:100%;border:1px solid #E2E5EF;border-radius:6px;padding:8px;font-size:12px;resize:none;height:60px;" placeholder="Digite sua resposta..."></textarea>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+              <div style="font-size:11px; color:#6B7280;">📎 Anexar arquivo (máx. 12MB)</div>
+              <div style="display:flex; gap:6px; align-items:center;">
+                <label style="font-size:11px; color:#6B7280;"><input type="checkbox"> Visível ao cliente</label>
+                <button style="background:#4F5DA3;color:white;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:600;">Enviar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mock-chamado-side">
+          <div style="font-size:11px; font-weight:700; color:#2D3463; margin-bottom:12px;">Informações</div>
+          <div class="side-info-row">
+            <div class="side-info-label">Status</div>
+            <div><span class="badge badge-analise">Em análise</span></div>
+          </div>
+          <div class="side-info-row">
+            <div class="side-info-label">Cliente</div>
+            <div class="side-info-val">Cliente Teste Hugo</div>
+          </div>
+          <div class="side-info-row">
+            <div class="side-info-label">Responsável</div>
+            <div class="side-info-val">Técnico João</div>
+          </div>
+          <div class="side-info-row">
+            <div class="side-info-label">Setor</div>
+            <div class="side-info-val">Suporte Técnico</div>
+          </div>
+          <div class="side-info-row">
+            <div class="side-info-label">Aberto em</div>
+            <div class="side-info-val">24/02/26 · 14:04</div>
+          </div>
+          <div style="margin-top:14px; border-top:1px solid #E2E5EF; padding-top:12px;">
+            <div style="font-size:11px; font-weight:700; color:#2D3463; margin-bottom:8px;">Ações rápidas</div>
+            <button style="width:100%;background:#EEF0FB;color:#4F5DA3;border:1px solid #C5CCE8;border-radius:6px;padding:6px;font-size:11px;font-weight:600;margin-bottom:5px;cursor:pointer;">↕ Alterar Status</button>
+            <button style="width:100%;background:#FFF8E1;color:#8C3D00;border:1px solid #FFE5CC;border-radius:6px;padding:6px;font-size:11px;font-weight:600;margin-bottom:5px;cursor:pointer;">⚡ Alterar Prioridade</button>
+            <button style="width:100%;background:#E9F5EE;color:#0A5C2A;border:1px solid #A8D5B5;border-radius:6px;padding:6px;font-size:11px;font-weight:600;cursor:pointer;">✓ Encerrar Chamado</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h4>Timeline (chamados_movimentos)</h4>
+        <ul>
+          <li>Tipos de evento: status | sistema | resposta</li>
+          <li>Cada evento: ícone + data/hora + usuário + mensagem</li>
+          <li>Mudança de status mostra: badge "de → para"</li>
+          <li>Resposta do cliente: bolha com cor diferente (azul claro)</li>
+          <li>Notas internas: visível só para suporte (visivel_cliente='Nao')</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Anexos (chamados_anexos)</h4>
+        <ul>
+          <li>Upload: PDF, DOC, DOCX, XLS, XLSX, CSV, TXT</li>
+          <li>Imagens: PNG, JPG, JPEG, WEBP, GIF</li>
+          <li>Compactados: ZIP, RAR</li>
+          <li>Limite: 12 MB por arquivo</li>
+          <li>Nome do arquivo: ch_{id}_{data}_{token}.{ext}</li>
+          <li>Salvo em: /helpdesk/uploads/arquivos/</li>
+        </ul>
+      </div>
+    </div>
+    <div class="demo-tip">
+      <strong>💡 O que destacar:</strong> Adicionar uma resposta pública e mostrar que aparece na timeline com nome, hora e conteúdo. Depois alterar o status via ação rápida e mostrar o evento de transição sendo registrado automaticamente em chamados_movimentos.
+    </div>
+  </div>
+
+  <!-- ===================== TELA 5 — PORTAL CLIENTE ===================== -->
+  <div class="tela-section" id="t4">
+    <div class="section-title">Tela 5 — Portal do Cliente (Acesso Externo)</div>
+    <div class="section-sub">Rota: <span class="route-pill">/helpdesk/painel_cliente/</span> &nbsp; Menu simplificado: somente "Abertura de Chamados"</div>
+
+    <div class="mockup-frame">
+      <div class="mockup-bar">
+        <div class="dot dot-r"></div><div class="dot dot-g"></div><div class="dot dot-b"></div>
+        <div class="mockup-bar-url">localhost/helpdesk/painel_cliente/</div>
+      </div>
+      <div class="mock-portal">
+        <div class="mock-portal-side">
+          <div style="color:white;font-size:12px;font-weight:700;margin-bottom:20px;">🎧 HelpDesk</div>
+          <div style="color:rgba(255,255,255,0.5);font-size:10px;margin-bottom:6px;padding:0 4px;">ÁREA DO CLIENTE</div>
+          <div class="mock-nav-item active"><span class="mock-nav-icon">🎫</span>Meus Chamados</div>
+          <div style="margin-top:auto; padding-top:20px;">
+            <div class="mock-nav-item"><span class="mock-nav-icon">🚪</span>Sair</div>
+          </div>
+        </div>
+        <div class="mock-portal-main">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <div style="font-size:14px; font-weight:700; color:#2D3463;">Meus Chamados</div>
+            <button style="background:#4F5DA3;color:white;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:600;">+ Abrir Chamado</button>
+          </div>
+          <div class="mock-table-wrap">
+            <table class="mock-table">
+              <thead><tr><th>Protocolo</th><th>Assunto</th><th>Prioridade</th><th>Status</th><th>Aberto em</th><th>Ver</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td style="font-family:monospace;font-size:10px;">CH20260225-AB1234</td>
+                  <td>Problema no acesso</td>
+                  <td><span class="badge badge-media">Média</span></td>
+                  <td><span class="badge badge-aberto">Aberto</span></td>
+                  <td style="font-size:10px;">25/02/26</td>
+                  <td><button style="font-size:10px;padding:3px 8px;border:1px solid #4F5DA3;color:#4F5DA3;background:white;border-radius:4px;">👁️ Ver</button></td>
+                </tr>
+                <tr>
+                  <td style="font-family:monospace;font-size:10px;">CH20260225-CD5678</td>
+                  <td>Dúvida sobre fatura</td>
+                  <td><span class="badge badge-baixa">Baixa</span></td>
+                  <td><span class="badge badge-aguard">Aguardando</span></td>
+                  <td style="font-size:10px;">25/02/26</td>
+                  <td><button style="font-size:10px;padding:3px 8px;border:1px solid #4F5DA3;color:#4F5DA3;background:white;border-radius:4px;">👁️ Ver</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top:12px; background:#FFF8E1; border-left:3px solid #FEBC2E; border-radius:0 6px 6px 0; padding:8px 12px; font-size:12px; color:#6B5000;">
+            ⚠️ O cliente só vê <strong>seus próprios chamados</strong> (filtro por cliente_id da sessão). Respostas internas ficam ocultas.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-card">
+        <h4>Diferenças vs. Painel Operador</h4>
+        <ul>
+          <li>Menu reduzido: apenas "Abertura de Chamados"</li>
+          <li>Sessão independente: variáveis cliente_id, cliente_nome</li>
+          <li>Filtro SQL automático por cliente_id (sem opção de alterar)</li>
+          <li>Sem acesso a outros módulos (usuários, logs, backup)</li>
+          <li>Respostas com visivel_cliente='Nao' ficam ocultas</li>
+        </ul>
+      </div>
+      <div class="spec-card">
+        <h4>Formulário de Abertura (Portal)</h4>
+        <ul>
+          <li>CPF já vem da sessão (não precisa redigitar)</li>
+          <li>Campos: Assunto, Descrição, Prioridade</li>
+          <li>Setor: pré-definido ou selecionável</li>
+          <li>Protocolo gerado automaticamente</li>
+          <li>Detalhes do chamado: rota pública /chamado/{PROTOCOLO}</li>
+        </ul>
+      </div>
+    </div>
+    <div class="demo-tip">
+      <strong>💡 O que destacar:</strong> Logar como cliente e mostrar que só os chamados dele aparecem. O técnico adiciona uma nota interna → mostrar que o cliente NÃO vê. O técnico adiciona uma resposta pública → cliente VÊ. Isso demonstra o controle de visibilidade em tempo real.
+    </div>
+  </div>
+
+  <!-- ===================== TELA 6 — GESTÃO ===================== -->
+  <div class="tela-section" id="t5">
+    <div class="section-title">Tela 6 — Gestão de Clientes, Usuários e Cadastros</div>
+    <div class="section-sub">Módulos CRUD completos com permissões granulares por módulo e por setor</div>
+
+    <div class="annot-grid" style="margin-bottom:20px;">
+      <div class="annot-item">
+        <div class="annot-num">1</div>
+        <h4>Clientes <span class="route-pill">/painel/clientes</span></h4>
+        <p>CRUD completo. Busca por nome/e-mail/CPF/CNPJ. Importação em lote via XLSX com mapeamento automático de colunas. Exportação XLSX. Foto de perfil. Histórico de chamados do cliente.</p>
+      </div>
+      <div class="annot-item">
+        <div class="annot-num">2</div>
+        <h4>Usuários <span class="route-pill">/painel/usuarios</span></h4>
+        <p>Níveis: Administrador / Atendente / Comum. Foto de perfil. Assinatura digital (imagem). Permissões por módulo (usuarios_permissoes). Alocação por setores (usuarios_setores).</p>
+      </div>
+      <div class="annot-item">
+        <div class="annot-num">3</div>
+        <h4>Status <span class="route-pill">/painel/status_abertura</span></h4>
+        <p>CRUD com nome, cor hexadecimal, ordem, flag "padrão" e flag "fechado". 6 status padrão criados: Aberto (#0d6efd), Em análise (#6f42c1), Em atendimento (#20c997), Aguardando (#fd7e14), Resolvido (#198754), Fechado (#6c757d).</p>
+      </div>
+      <div class="annot-item">
+        <div class="annot-num">4</div>
+        <h4>Logs <span class="route-pill">/painel/logs</span></h4>
+        <p>Auditoria de todas as ações: login, logout, inserir, editar, excluir. Filtros por período/usuário/ação. Exportação em PDF (server-side). Registra IP e User-Agent de cada operação.</p>
+      </div>
+      <div class="annot-item">
+        <div class="annot-num">5</div>
+        <h4>Setores <span class="route-pill">/painel/setores</span></h4>
+        <p>8 setores pré-cadastrados: Suporte Técnico, Financeiro, Comercial, RH, TI, Atendimento ao Cliente, Infraestrutura, Administrativo. CRUD completo para adicionar mais.</p>
+      </div>
+      <div class="annot-item">
+        <div class="annot-num">6</div>
+        <h4>Backup <span class="route-pill">/painel/backup</span></h4>
+        <p>Gera arquivo .sql completo via PHP/PDO (SHOW CREATE TABLE + INSERT INTO). Sem dependência de mysqldump. Download imediato. Nome: backup_{banco}_{data}.sql. Histórico de backups gerados.</p>
+      </div>
+    </div>
+
+    <div class="spec-card" style="border-radius:8px; padding:16px;">
+      <h4>Regras de Permissão (usuarios_permissoes + usuarios_setores)</h4>
+      <ul style="margin-top:8px;">
+        <li>Administrador: acesso total a todos os módulos e chamados de todos os setores</li>
+        <li>Atendente: acesso apenas aos módulos concedidos + chamados dos seus setores</li>
+        <li>Comum: acesso mínimo (ex: apenas abertura de chamados)</li>
+        <li>Verificação feita a cada request via permissoes.php (podeFazer('criar'), podeFazer('editar'))</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===================== PALETA E FLUXO ===================== -->
+  <div class="tela-section" id="t6">
+    <div class="section-title">Paleta de Cores &amp; Fluxo do Chamado</div>
+    <div class="section-sub">Use estes valores exatamente no Figma — extraídos do banco de dados (tabela chamados_status e config)</div>
+
+    <div style="background:white; border:1px solid #E2E5EF; border-radius:10px; padding:20px; margin-bottom:20px;">
+      <div style="font-size:13px; font-weight:700; color:#2D3463; margin-bottom:12px;">Cores dos Status (tabela chamados_status)</div>
+      <div class="palette-strip">
+        <div class="pal-item" style="background:#CFDFFE; color:#0D4DB5;"><div class="pal-swatch" style="background:#0D6EFD;"></div>Aberto · #0D6EFD</div>
+        <div class="pal-item" style="background:#E8D9FF; color:#4A1B9A;"><div class="pal-swatch" style="background:#6F42C1;"></div>Em análise · #6F42C1</div>
+        <div class="pal-item" style="background:#C8F5E6; color:#0A5C3B;"><div class="pal-swatch" style="background:#20C997;"></div>Em atendimento · #20C997</div>
+        <div class="pal-item" style="background:#FFE5CC; color:#8C3D00;"><div class="pal-swatch" style="background:#FD7E14;"></div>Aguardando · #FD7E14</div>
+        <div class="pal-item" style="background:#C8F5D6; color:#0A5C2A;"><div class="pal-swatch" style="background:#198754;"></div>Resolvido · #198754</div>
+        <div class="pal-item" style="background:#E9E9E9; color:#444;"><div class="pal-swatch" style="background:#6C757D;"></div>Fechado · #6C757D</div>
+      </div>
+
+      <div style="font-size:13px; font-weight:700; color:#2D3463; margin-top:20px; margin-bottom:12px;">Cores das Prioridades</div>
+      <div class="palette-strip">
+        <div class="pal-item" style="background:#E9E9E9; color:#444;"><div class="pal-swatch" style="background:#6C757D;"></div>Baixa · #6C757D</div>
+        <div class="pal-item" style="background:#CFDFFE; color:#0D4DB5;"><div class="pal-swatch" style="background:#0D6EFD;"></div>Média · #0D6EFD</div>
+        <div class="pal-item" style="background:#FFE5CC; color:#8C3D00;"><div class="pal-swatch" style="background:#FD7E14;"></div>Alta · #FD7E14</div>
+        <div class="pal-item" style="background:#FFD5D5; color:#8C0000;"><div class="pal-swatch" style="background:#DC3545;"></div>Urgente · #DC3545</div>
+      </div>
+
+      <div style="font-size:13px; font-weight:700; color:#2D3463; margin-top:20px; margin-bottom:12px;">Cores do Sistema (tabela config)</div>
+      <div class="palette-strip">
+        <div class="pal-item" style="background:#EEF0FB; color:#2D3463;"><div class="pal-swatch" style="background:#4F5DA3;"></div>Primária · #667eea</div>
+        <div class="pal-item" style="background:#E8E0F5; color:#2D1869;"><div class="pal-swatch" style="background:#764ba2;"></div>Secundária · #764ba2</div>
+        <div class="pal-item" style="background:#F8F9FC; color:#1E2030;"><div class="pal-swatch" style="background:#2D3463;"></div>Sidebar · #2D3463</div>
+      </div>
+    </div>
+
+    <div style="background:white; border:1px solid #E2E5EF; border-radius:10px; padding:20px; margin-bottom:20px;">
+      <div style="font-size:13px; font-weight:700; color:#2D3463; margin-bottom:12px;">Fluxo de Status do Chamado</div>
+      <div class="flow-row">
+        <div class="flow-box">Aberto</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Em análise</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Em atendimento</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box">Aguardando cliente</div>
+        <div class="flow-arrow">↘</div>
+      </div>
+      <div class="flow-row" style="justify-content:flex-end; gap:8px; margin-top:-8px;">
+        <div class="flow-box closed">Resolvido</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-box closed">Fechado</div>
+      </div>
+      <div style="font-size:12px; color:#6B7280; margin-top:12px;">
+        Cada transição é registrada em <code>chamados_movimentos</code> com: chamado_id, usuario_id, tipo, status_de, status_para, mensagem, criado_em.
+      </div>
+    </div>
+
+    <div style="background:white; border:1px solid #E2E5EF; border-radius:10px; padding:20px;">
+      <div style="font-size:13px; font-weight:700; color:#2D3463; margin-bottom:12px;">Formato do Protocolo Único</div>
+      <div style="font-family:monospace; font-size:22px; color:#4F5DA3; text-align:center; padding:16px; background:#EEF0FB; border-radius:8px; letter-spacing:.05em;">CH20260224-96E29B</div>
+      <div style="display:flex; gap:12px; margin-top:12px; flex-wrap:wrap; justify-content:center;">
+        <div style="text-align:center; font-size:12px;"><div style="font-weight:700; color:#2D3463;">CH</div><div style="color:#6B7280;">Prefixo fixo</div></div>
+        <div style="text-align:center; font-size:12px;"><div style="font-weight:700; color:#2D3463;">2026</div><div style="color:#6B7280;">Ano</div></div>
+        <div style="text-align:center; font-size:12px;"><div style="font-weight:700; color:#2D3463;">02</div><div style="color:#6B7280;">Mês</div></div>
+        <div style="text-align:center; font-size:12px;"><div style="font-weight:700; color:#2D3463;">24</div><div style="color:#6B7280;">Dia</div></div>
+        <div style="text-align:center; font-size:12px;"><div style="font-weight:700; color:#2D3463;">-</div><div style="color:#6B7280;">Separador</div></div>
+        <div style="text-align:center; font-size:12px;"><div style="font-weight:700; color:#2D3463;">96E29B</div><div style="color:#6B7280;">HEX aleatório (md5+uniqid)</div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showTela(idx) {
+  document.querySelectorAll('.tela-section').forEach((el, i) => {
+    el.classList.toggle('visible', i === idx);
+  });
+  document.querySelectorAll('.tela-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i === idx);
+  });
+}
+</script>
+</body>
+</html>
